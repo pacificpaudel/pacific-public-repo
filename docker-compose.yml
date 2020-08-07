@@ -11,7 +11,7 @@ services:
       - TZ=Europe/London
       - INTERFACE=eth0 #optional
     volumes:
-      - <path to data>:/config
+      - /config
     ports:
       - 80:80
       - 9443:9443
