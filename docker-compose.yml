@@ -1,19 +1,24 @@
-version: "2.1"
+version: '2'
 services:
-  openvpn-as:
-    image: linuxserver/openvpn-as
-    container_name: openvpn-as
+  openvpn:
     cap_add:
-      - NET_ADMIN
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - INTERFACE=eth0 #optional
-    volumes:
-      - ./openvpn-data/conf:/config
+     - NET_ADMIN
+    image: alekslitvinenk/openvpn
+    container_name: openvpn
     ports:
-      - 80:80
-      - 9443:9443
-      - 1194:1194/udp
-    restart: unless-stopped
+     - "1194:1194/udp"
+     - "8080:8080/tcp"
+    restart: always
+    depends_on:
+      - "gui"
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+  gui:
+    image: awalach/openvpn-web-ui
+    container_name: openvpn-gui
+    ports:
+     - "80:80/tcp"
+    restart: always
+    volumes:
+     - ./openvpn-data/conf:/etc/openvpn
+     - ./openvpn-data/db:/opt/openvpn-gui/db
