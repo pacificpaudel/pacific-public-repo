@@ -13,7 +13,7 @@ services:
     volumes:
       - <path to data>:/config
     ports:
-      - 943:943
+      - 80:80
       - 9443:9443
       - 1194:1194/udp
     restart: unless-stopped
